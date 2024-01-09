@@ -68,7 +68,7 @@ __global__ void addQKVBiasIA3Transpose(T* q_out,
 
         T k = add(ldg(&k_in[src_id]), ldg(&bias_k[col_id]));
         if (use_ia3_key) {
-            k = k * ia3_key_weights[ia3_task * n + col_id];
+            k = (const T) k * ia3_key_weights[ia3_task * n + col_id];
         }
         k_out[target_id] = k;
 

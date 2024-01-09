@@ -325,8 +325,8 @@ template<> __device__ inline half2 cuda_abs(half2 val) { return __habs2(val); }
 template<> __device__ inline __nv_bfloat16  cuda_abs(__nv_bfloat16  val) { return __habs(val); }
 template<> __device__ inline __nv_bfloat162 cuda_abs(__nv_bfloat162 val) { return __habs2(val); }
 #else
-template<> __device__ inline __nv_bfloat16  cuda_abs(__nv_bfloat16  val) { return fabs(val); }
-template<> __device__ inline __nv_bfloat162 cuda_abs(__nv_bfloat162 val) { return make_bfloat162(fabs(val.x), fabs(val.y)); }
+template<> __device__ inline __nv_bfloat16  cuda_abs(__nv_bfloat16  val) { return fabs((float) val); }
+template<> __device__ inline __nv_bfloat162 cuda_abs(__nv_bfloat162 val) { return make_bfloat162(fabs((float) val.x), fabs((float) val.y)); }
 #endif
 
 #endif // ENABLE_FP16

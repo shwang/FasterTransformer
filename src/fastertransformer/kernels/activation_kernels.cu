@@ -225,7 +225,7 @@ __global__ void generic_activation(T*                      out,
             const int offset = padding_offset == nullptr ? 0 : padding_offset[word_id];
             const int batch_id = (word_id + offset) / seq_len;
             const int task = ia3_tasks[batch_id];
-            val            = val * ia3_weights[task * n + (id % n)];
+            val            = (const T) val * ia3_weights[task * n + (id % n)];
         }
 
         if (int8_mode != 2) {
@@ -419,7 +419,7 @@ __global__ void addBiasGeluV2(T2* out,
             const int offset   = padding_offset == nullptr ? 0 : padding_offset[word_id];
             const int batch_id = (word_id + offset) / seq_len;
             const int task     = ia3_tasks[batch_id];
-            val                = val * ia3_weights[task * N + (id % N)];
+            val                = (const T2) val * ia3_weights[task * N + (id % N)];
         }
         out[id] = val;
     }
@@ -457,7 +457,7 @@ __global__ void addBiasGeluV3(T2* out,
                 const int offset   = padding_offset == nullptr ? 0 : padding_offset[word_id];
                 const int batch_id = (word_id + offset) / seq_len;
                 const int task     = ia3_tasks[batch_id];
-                buffer[i]          = buffer[i] * ia3_weights[task * N + ((id + i) % N)];
+                buffer[i]          = (const T2) buffer[i] * ia3_weights[task * N + ((id + i) % N)];
             }
             out[id + i] = buffer[i];
         }
